@@ -44,7 +44,7 @@ router.post("/", (req, res) => {
     });
 });
 
-//Post action
+// Post action
 router.post("/:id/actions", validateProjectId, (req, res) => {
   Actions.insert(req.body)
     .then((action) => {
@@ -56,7 +56,31 @@ router.post("/:id/actions", validateProjectId, (req, res) => {
     });
 });
 
-// middlware functions
+// DELETE project
+router.delete("/:id", validateProjectId, (req, res) => {
+  Projects.remove(req.params.id)
+    .then((project) => {
+      res.status(200).json(project);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: "Database Error" });
+    });
+});
+
+// Delete action
+router.delete("/:id/actions/:action_id", validateProjectId, (req, res) => {
+  Actions.remove(req.params.action_id)
+    .then((action) => {
+      res.status(200).json(action);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: "Database Error" });
+    });
+});
+
+// middlware function
 function validateProjectId(req, res, next) {
   Projects.get(req.params.id)
     .then((project) => {
