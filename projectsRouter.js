@@ -157,4 +157,28 @@ function validateActionId(req, res, next) {
     });
 }
 
+function validateProject(req, res, next) {
+  if (!req.body) {
+    res.status(400).json({ message: "missing project data" });
+  } else if (!req.body.name) {
+    res.status(400).json({ message: "missing required name field" });
+  } else if (!req.body.description) {
+    res.status(400).json({ message: "missing required name field" });
+  } else {
+    next();
+  }
+}
+
+function validateAction(req, res, next) {
+  if (!req.body) {
+    res.status(400).json({ message: "missing actioin data" });
+  } else if (!req.body.description) {
+    res.status(400).json({ message: "missing required description field" });
+  } else if (!req.body.notes) {
+    res.status(400).json({ message: "missing required notes field" });
+  } else {
+    next();
+  }
+}
+
 module.exports = router;
