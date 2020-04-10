@@ -40,13 +40,23 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+  This week we used middleware as wll as the require function to import routes for our server to execute.
+
 - [ ] Describe Middleware?
+
+  Middleware functions have access to both our request and response objects and the next function for our application. The next function in the Express router, when invoked, will execute the middleware meaning that the code succeeded.
 
 - [ ] Describe a Resource?
 
+  The information that we are using for our API, so in this project we used routers and actions.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+  The API can return status codes to show the client if the request is successful, like status codes 200 and 201.
+
 - [ ] How can we partition our application into sub-applications?
+
+  We can use multiple routes in our application to break down our application to sub-applications and make it easier to organize.
 
 ## Minimum Viable Product
 

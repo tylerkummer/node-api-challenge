@@ -32,6 +32,16 @@ router.get("/:id/actions", validateProjectId, (req, res) => {
     });
 });
 
+// GET actions by id
+router.get(
+  "/:id/actions/:action_id",
+  validateProjectId,
+  validateActionId,
+  (req, res) => {
+    res.status(200).json(req.action);
+  }
+);
+
 // POST project
 router.post("/", (req, res) => {
   Projects.insert(req.body)
@@ -69,16 +79,21 @@ router.delete("/:id", validateProjectId, (req, res) => {
 });
 
 // Delete action
-router.delete("/:id/actions/:action_id", validateProjectId, (req, res) => {
-  Actions.remove(req.params.action_id)
-    .then((action) => {
-      res.status(200).json(action);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ error: "Database Error" });
-    });
-});
+router.delete(
+  "/:id/actions/:action_id",
+  validateProjectId,
+  validateActionId,
+  (req, res) => {
+    Actions.remove(req.params.action_id)
+      .then((action) => {
+        res.status(200).json(action);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: "Database Error" });
+      });
+  }
+);
 
 // PUT project
 router.put("/:id", validateProjectId, (req, res) => {
@@ -93,18 +108,23 @@ router.put("/:id", validateProjectId, (req, res) => {
 });
 
 // PUT action
-router.put("/:id/actions/:action_id", validateProjectId, (req, res) => {
-  Actions.update(req.params.action_id, req.body)
-    .then((action) => {
-      res.status(200).json(action);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ error: "Database Error" });
-    });
-});
+router.put(
+  "/:id/actions/:action_id",
+  validateProjectId,
+  validateActionId,
+  (req, res) => {
+    Actions.update(req.params.action_id, req.body)
+      .then((action) => {
+        res.status(200).json(action);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: "Database Error" });
+      });
+  }
+);
 
-// Middlware function
+// Middlware functions
 function validateProjectId(req, res, next) {
   Projects.get(req.params.id)
     .then((project) => {
@@ -112,6 +132,22 @@ function validateProjectId(req, res, next) {
         res.status(400).json({ message: "invalid project id" });
       } else {
         req.project = project;
+        next();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: "Database error" });
+    });
+}
+
+function validateActionId(req, res, next) {
+  Actions.get(req.params.action_id)
+    .then((action) => {
+      if (!action) {
+        res.status(400).json({ message: "invalid action id" });
+      } else {
+        req.action = action;
         next();
       }
     })
