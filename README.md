@@ -40,7 +40,7 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
-  This week we used middleware as wll as the require function to import routes for our server to execute.
+  This week we used middleware as well as the require function to import routes for our server to execute.
 
 - [ ] Describe Middleware?
 
